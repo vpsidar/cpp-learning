@@ -1,0 +1,1 @@
+In reverse approach we have to identify the bruteforce solution that can be enough for the thing which you want to try out 
