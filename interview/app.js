@@ -55,4 +55,67 @@ function binarySum(A, B){
     
     return carry==1?'1'+ans:ans;
 }
-console.log(binarySum('110','10'));
+
+function calculatePairSum(A, B){
+    let hm = new Map();
+    let count = 0;
+    //build the hashmap
+    for(let i = 0; i< A.length; i++ ){
+        if(hm.has(A[i])) {
+            let val = hm.get(A[i]);
+            val++;
+            hm.set(A[i],val);
+        } else {
+            hm.set(A[i],1); 
+        }
+    }
+
+    for(let i = 0; i< A.length; i++){
+        let a = A[i];
+        let b = B - A[i];
+        if(a != b) {
+            if(hm.has(b) && hm.get(b) > 0) {
+                count++;
+                let val = hm.get(A[i]);
+                val--;
+                hm.set(A[i],val)
+            }
+        } else if(a== b) {
+            if(hm.has(b)){
+                if(hm.get(b) > 1) {
+                    count++;
+                    let val = hm.get(A[i]);
+                    val--;
+                }
+            }
+        }
+    }
+    return count;
+}
+
+function checkK(A, B){
+    let sum = 0
+    let ans = [];
+    let pf = [];
+    for(let i = 0; i<A.length; i++){
+        sum = sum + A[i];
+        if(sum == B) {
+            ans.push(0)
+            ans.push(i)
+            return ans;
+        }
+
+        let fi = pf.lastIndexOf(sum-B);
+        if(fi >= 0){
+            ans.push(fi);
+            ans.push(i);
+        }
+        pf.push(sum);
+    }
+
+    return ans.length>0? ans: -1;
+}
+ let A  = [ 1, 2, 3, 4, 5 ]
+let B =  5
+// const A = [ 9, 18, 17, 17, 6, 16, 13, 11, 15, 7 ]
+ console.log(checkK(A,B));
